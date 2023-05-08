@@ -1,0 +1,10 @@
+[
+    {"Customer": "BLOOM ENERGY", "CFC": 50, "MDS": 50, "BEstCommit": 45, "ProbableCommit": 40},
+    {"Customer": "NOKIA", "CFC": 50, "MDS": 50, "BEstCommit": 45, "ProbableCommit": 40},
+    {"Customer": "ROCHIE", "CFC": 50, "MDS": 50, "BEstCommit": 45, "ProbableCommit": 40},
+    {"Customer": "RIL JIO", "CFC": 50, "MDS": 50, "BEstCommit": 45, "ProbableCommit": 40},
+    {"Customer": "PHILIPS-US", "CFC": 50, "MDS": 50, "BEstCommit": 45, "ProbableCommit": 40},
+    {"Customer": "PHILIPS-MATC", "CFC": 50, "MDS": 50, "BEstCommit": 45, "ProbableCommit": 40},
+    {"Customer": "TEJAS", "CFC": 50, "MDS": 50, "BEstCommit": 45, "ProbableCommit": 40},
+    {"Customer": "GE HC", "CFC": 50, "MDS": 50, "BEstCommit": 45, "ProbableCommit": 40}
+]
