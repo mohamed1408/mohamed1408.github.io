@@ -57,7 +57,7 @@ const SAMPLE_DATA = [
 //   return "#" + RR + GG + BB;
 // };
 
-var svg = d3.select("#piechart_1").append("svg").append("g");
+var svg = d3.select("#piechart_1").append("svg").attr("id", "pie_chart").append("g");
 
 svg.append("g").attr("class", "slices");
 svg.append("g").attr("class", "labels");

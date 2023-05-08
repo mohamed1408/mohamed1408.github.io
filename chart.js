@@ -50,7 +50,35 @@ var svg = d3
   .attr("height", height + margin.top + margin.bottom)
   .append("g")
   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
+var Tooltip = d3.select("#barchart_1")
+  .append("div")
+  .style("opacity", 0)
+  .attr("class", "tooltip")
+  .style("background-color", "white")
+  .style("border", "solid")
+  .style("border-width", "2px")
+  .style("border-radius", "5px")
+  .style("padding", "5px")
+var mouseover = function (d) {
+  Tooltip
+    .style("opacity", 1)
+  d3.select(this)
+    .style("stroke", "black")
+    .style("opacity", 1)
+}
+var mousemove = function (event, d) {
+  console.log(d)
+  Tooltip
+    .html("Probable Commit: " + d.ProbableCommit)
+    .style("left", (event.clientX + 70) + "px")
+    .style("top", (event.clientY) + "px")
+}
+var mouseleave = function (d) {
+  Tooltip
+    .style("opacity", 0)
+  d3.select(this)
+    .style("stroke", "green")
+}
 const shadeColor = (color, percent) => {
   var R = parseInt(color.substring(1, 3), 16);
   var G = parseInt(color.substring(3, 5), 16);
@@ -137,13 +165,16 @@ const grouped_bar_chart = () => {
     })
     .selectAll("rect")
     .data(function (d) {
+      console.log(d)
       return subgroups.map(function (key) {
-        return { key: key, value: d[key] };
+        return { key: key, value: d[key], ProbableCommit: d.ProbableCommit };
       });
     })
     .enter()
     .append("rect")
     .attr("x", function (d) {
+      console.log(d.key)
+      console.log(xSubgroup(d.key))
       return xSubgroup(d.key);
     })
     .attr("y", function (d) {
@@ -164,31 +195,66 @@ const grouped_bar_chart = () => {
     .datum(data)
     .attr("fill", "none")
     .attr("stroke", "green")
-    .attr("stroke-width", 5)
+    .attr("stroke-width", 1)
     .attr(
       "d",
       d3
         .line()
         .x(function (d) {
 
-          return x(d.Customer);
+          return x(d.Customer) + xSubgroup("MDS") + xSubgroup.bandwidth() / 2;
         })
         .y(function (d) {
           return y(d.ProbableCommit);
-        })
+        }).curve(d3.curveMonotoneX)
     )
-    svg.selectAll("circle-group")
-      .data(data).enter()
-      .append("g")
-      .selectAll("circle")
-      .style('fill', 'black')
-      .data(d => d.ProbableCommit).enter()
-      .append("g")
-      .attr("class", "circle")  
-      .append("circle")
-      .attr("cx", d => that.x(d.Customer))
-      .attr("cy", d => that.y(d.ProbableCommit))
-      .attr("r", 5)
+
+  svg.selectAll("text.cfc")
+    .data(data)
+    .enter()
+    .append("text")
+    .attr("class", "cfc")
+    .attr("text-anchor", "middle")
+    .attr("font-size", xSubgroup.bandwidth() / 2)
+    .attr("x", function (d) { return x(d.Customer) + xSubgroup("CFC") + xSubgroup.bandwidth() / 2; })
+    .attr("y", function (d) { return y(d.CFC) - 10; })
+    .text(function (d) { return "$" + d.CFC; });
+  svg.selectAll("text.mds")
+    .data(data)
+    .enter()
+    .append("text")
+    .attr("class", "mds")
+    .attr("text-anchor", "middle")
+    .attr("font-size", xSubgroup.bandwidth() / 2)
+    .attr("x", function (d) { return x(d.Customer) + xSubgroup("MDS") + xSubgroup.bandwidth() / 2 })
+    .attr("y", function (d) { return y(d.MDS) - 10; })
+    .text(function (d) { return "$" + d.MDS; });
+  svg.selectAll("text.best_commit")
+    .data(data)
+    .enter()
+    .append("text")
+    .attr("class", "best_commit")
+    .attr("text-anchor", "middle")
+    .attr("font-size", xSubgroup.bandwidth() / 2)
+    .attr("x", function (d) { return x(d.Customer) + xSubgroup("BestCommit") + xSubgroup.bandwidth() / 2; })
+    .attr("y", function (d) { return y(d.BestCommit) - 10; })
+    .text(function (d) { return "$" + d.BestCommit; });
+
+  svg.selectAll("circle")
+    .data(data)
+    .enter()
+    .append("circle")
+    .style('fill', shadeColor(color("MDS"), 200))
+    .attr("class", "circle")
+    .attr("stroke", "green")
+    .attr("cx", d => x(d.Customer) + xSubgroup("MDS") + xSubgroup.bandwidth() / 2)
+    .attr("cy", d => y(d.ProbableCommit))
+    .attr("r", xSubgroup.bandwidth() / 2)
+    
+    svg.selectAll("rect")
+    .on("mouseover", mouseover)
+    .on("mousemove", mousemove)
+    .on("mouseleave", mouseleave)
   //   svg.selectAll("path").attr("stroke", "white");
   //   svg.selectAll("line").attr("stroke", "white");
   //   });
