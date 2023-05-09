@@ -6,7 +6,14 @@ var filterConfig = {
     durationtype: "year"
 }
 const configFilter = () => {
-    
+    document.querySelectorAll("[id$=btn]").forEach(btn => {
+        console.log(btn.id)
+        if(filterConfig.durationtype == btn.id.split("-")[0]){
+            btn.classList.add("active")
+        } else {
+            btn.classList.remove("active")
+        }
+    })
 }
 // header shadow on scroll
 window.addEventListener("scroll", () => {
@@ -25,3 +32,7 @@ data.forEach(x => {
     option.value = x.Customer
     customerSelect.appendChild(option)
 })
+
+configFilter()
+
+// new colors - bar charts #cca7fb | #7338fc

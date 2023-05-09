@@ -57,11 +57,11 @@ const SAMPLE_DATA = [
 //   return "#" + RR + GG + BB;
 // };
 
-var svg = d3.select("#piechart_1").append("svg").attr("id", "pie_chart").append("g");
+var pieSVG = d3.select("#piechart_1").append("svg").attr("id", "pie_chart").append("g");
 
-svg.append("g").attr("class", "slices");
-svg.append("g").attr("class", "labels");
-svg.append("g").attr("class", "lines");
+pieSVG.append("g").attr("class", "slices");
+pieSVG.append("g").attr("class", "labels");
+pieSVG.append("g").attr("class", "lines");
 var margin = { top: 30, right: 30, bottom: 70, left: 60 };
 
 var width = screen.width / 1 - margin.left - margin.right,
@@ -85,7 +85,7 @@ var outerArc = d3
   .innerRadius(radius * 0.9)
   .outerRadius(radius * 0.9);
 
-svg.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+pieSVG.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
 var key = function (d) {
   return d.data.label;
@@ -119,7 +119,7 @@ d3.select(".randomize").on("click", function () {
 
 function change(data) {
   /* ------- PIE SLICES -------*/
-  var slice = svg
+  var slice = pieSVG
     .select(".slices")
     .selectAll("path.slice")
     .data(pie(data), key);
@@ -151,7 +151,7 @@ function change(data) {
 
   /* ------- TEXT LABELS -------*/
 
-  var text = svg
+  var text = pieSVG
     .select(".labels")
     .selectAll("text")
     .data(pie(data), key);
@@ -196,7 +196,7 @@ function change(data) {
 
   /* ------- SLICE TO TEXT POLYLINES -------*/
 
-  var polyline = svg
+  var polyline = pieSVG
     .select(".lines")
     .selectAll("polyline")
     .data(pie(data), key)
@@ -220,7 +220,7 @@ function change(data) {
     });
 
   polyline.exit().remove();
-//   svg.selectAll("text").style("color", "white")
+//   pieSVG.selectAll("text").style("color", "white")
 }
 
 change(
