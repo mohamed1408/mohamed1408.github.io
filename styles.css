@@ -1,27 +1,51 @@
-body {
-    /* background-color: #2f2f2f; */
-}
+/* body {
+    background-color: #2f2f2f;
+} */
 
 svg#pie_chart {
 	width: 100%;
 	height: 100%;
 }
 
-path.slice{
-	stroke-width:1px;
+path.slice {
+	stroke-width: 1px;
 }
 
-polyline{
+polyline {
 	opacity: .3;
 	stroke-width: 2px;
-    stroke: black;
+	stroke: black;
 	fill: none;
 }
 
 #piechart_1 {
-    height: 80vh;
+	height: 80vh;
 }
 
 .tooltip {
 	position: fixed;
+}
+
+#header {
+	background-color: white;
+	position: fixed;
+	height: 140px;
+	top: 0;
+	left: 0;
+	right: 0;
+	padding: 10px;
+	/* border: 1px solid black; */
+}
+
+.container {
+	margin-top: 150px;
+}
+
+.radio-btn {
+	padding: 10px;
+	cursor: pointer;
+}
+
+.display-none {
+	display: none;
 }

@@ -1,4 +1,4 @@
-var margin = { top: 30, right: 30, bottom: 70, left: 60 },
+var margin = { top: 30, right: 30, bottom: 160, left: 60 },
   width = screen.width / 1 - margin.left - margin.right,
   height = screen.height * 0.75 - margin.top - margin.bottom;
 
@@ -62,12 +62,12 @@ var Tooltip = d3.select("#barchart_1")
 var mouseover = function (d) {
   Tooltip
     .style("opacity", 1)
-  d3.select(this)
-    .style("stroke", "black")
-    .style("opacity", 1)
+  // d3.select(this)
+  //   .style("stroke", "black")
+  //   .style("opacity", 1)
 }
 var mousemove = function (event, d) {
-  console.log(d)
+  // console.log(d)
   Tooltip
     .html("Probable Commit: " + d.ProbableCommit)
     .style("left", (event.clientX + 70) + "px")
@@ -76,8 +76,8 @@ var mousemove = function (event, d) {
 var mouseleave = function (d) {
   Tooltip
     .style("opacity", 0)
-  d3.select(this)
-    .style("stroke", "green")
+  // d3.select(this)
+  //   .style("stroke", "green")
 }
 const shadeColor = (color, percent) => {
   var R = parseInt(color.substring(1, 3), 16);
@@ -128,8 +128,7 @@ const grouped_bar_chart = () => {
     .call(d3.axisBottom(x).tickSize(5))
     .selectAll("text")
     .attr("transform", "translate(-10,0)rotate(-45)")
-    .style("text-anchor", "end");
-  // .style("color", "white");
+    .style("text-anchor", "end")
 
   // Add Y axis
   var y = d3.scaleLinear().domain([0, 100]).range([height, 0]);
@@ -145,6 +144,11 @@ const grouped_bar_chart = () => {
     .domain(subgroups)
     .range([0, x.bandwidth()])
     .padding([0.1]);
+
+    console.log(xSubgroup)
+  svg
+    .selectAll("text")
+    .style("font-size", xSubgroup.bandwidth() / 2);
 
   // color palette = one color per subgroup
   var color = d3
@@ -249,9 +253,9 @@ const grouped_bar_chart = () => {
     .attr("stroke", "#11174a")
     .attr("cx", d => x(d.Customer) + xSubgroup("MDS") + xSubgroup.bandwidth() / 2)
     .attr("cy", d => y(d.ProbableCommit))
-    .attr("r", xSubgroup.bandwidth() / 4)
-    
-    svg.selectAll("rect")
+    .attr("r", xSubgroup.bandwidth() / 8)
+
+  svg.selectAll("rect")
     .on("mouseover", mouseover)
     .on("mousemove", mousemove)
     .on("mouseleave", mouseleave)
