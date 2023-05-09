@@ -64,7 +64,7 @@ svg.append("g").attr("class", "labels");
 svg.append("g").attr("class", "lines");
 var margin = { top: 30, right: 30, bottom: 70, left: 60 };
 
-var width = screen.width / 2 - margin.left - margin.right,
+var width = screen.width / 1 - margin.left - margin.right,
   height = screen.height * 0.75 - margin.top - margin.bottom,
   radius = Math.min(width, height) / 2;
 

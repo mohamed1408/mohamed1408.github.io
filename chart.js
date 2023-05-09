@@ -1,5 +1,5 @@
 var margin = { top: 30, right: 30, bottom: 70, left: 60 },
-  width = screen.width / 2 - margin.left - margin.right,
+  width = screen.width / 1 - margin.left - margin.right,
   height = screen.height * 0.75 - margin.top - margin.bottom;
 
 const data = [
@@ -194,8 +194,8 @@ const grouped_bar_chart = () => {
     .append("path")
     .datum(data)
     .attr("fill", "none")
-    .attr("stroke", "green")
-    .attr("stroke-width", 1)
+    .attr("stroke", "#11174a")
+    .attr("stroke-width", 2)
     .attr(
       "d",
       d3
@@ -244,12 +244,12 @@ const grouped_bar_chart = () => {
     .data(data)
     .enter()
     .append("circle")
-    .style('fill', shadeColor(color("MDS"), 200))
+    .style('fill', "#11174a")
     .attr("class", "circle")
-    .attr("stroke", "green")
+    .attr("stroke", "#11174a")
     .attr("cx", d => x(d.Customer) + xSubgroup("MDS") + xSubgroup.bandwidth() / 2)
     .attr("cy", d => y(d.ProbableCommit))
-    .attr("r", xSubgroup.bandwidth() / 2)
+    .attr("r", xSubgroup.bandwidth() / 4)
     
     svg.selectAll("rect")
     .on("mouseover", mouseover)
