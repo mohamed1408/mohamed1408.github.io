@@ -57,7 +57,11 @@ const SAMPLE_DATA = [
 //   return "#" + RR + GG + BB;
 // };
 
-var pieSVG = d3.select("#piechart_1").append("svg").attr("id", "pie_chart").append("g");
+var pieSVG = d3
+  .select("#piechart_1")
+  .append("svg")
+  .attr("id", "pie_chart")
+  .append("g");
 
 pieSVG.append("g").attr("class", "slices");
 pieSVG.append("g").attr("class", "labels");
@@ -91,19 +95,18 @@ var key = function (d) {
   return d.data.label;
 };
 
+const colorScale = d3.interpolateRdYlBu;
+
+const colorRangeInfo = {
+  colorStart: 0,
+  colorEnd: 1,
+  useEndAsStart: false,
+};
+
 var color = d3
   .scaleOrdinal()
   .domain(SAMPLE_DATA.map((x) => x.Customer))
-  .range([
-    "#98abc5",
-    "#8a89a6",
-    "#7b6888",
-    "#6b486b",
-    "#a05d56",
-    "#d0743c",
-    "#ff8c00",
-    "#d0743c",
-  ]);
+  .range(interpolateColors(SAMPLE_DATA.length, colorScale, colorRangeInfo));
 
 function randomData() {
   console.log("Randomizing");
@@ -128,11 +131,10 @@ function change(data) {
     .enter()
     .insert("path")
     .style("fill", function (d) {
-      return shadeColor(color(d.data.label), 50);
-    })
-    .attr("stroke", function (d) {
       return color(d.data.label);
     })
+    .attr("stroke", "white")
+    .style("stroke-width", 5)
     .attr("class", "slice");
 
   slice
@@ -151,10 +153,7 @@ function change(data) {
 
   /* ------- TEXT LABELS -------*/
 
-  var text = pieSVG
-    .select(".labels")
-    .selectAll("text")
-    .data(pie(data), key);
+  var text = pieSVG.select(".labels").selectAll("text").data(pie(data), key);
 
   text
     .enter()
@@ -200,7 +199,7 @@ function change(data) {
     .select(".lines")
     .selectAll("polyline")
     .data(pie(data), key)
-    .attr("stroke", "white");
+    // .attr("stroke", "white");
 
   polyline.enter().append("polyline");
 
@@ -220,7 +219,7 @@ function change(data) {
     });
 
   polyline.exit().remove();
-//   pieSVG.selectAll("text").style("color", "white")
+  //   pieSVG.selectAll("text").style("color", "white")
 }
 
 change(
@@ -233,4 +232,3 @@ change(
     return { label: x.Customer, value: x.MDS };
   })
 );
-

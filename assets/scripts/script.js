@@ -36,3 +36,7 @@ data.forEach(x => {
 configFilter()
 
 // new colors - bar charts #cca7fb | #7338fc
+
+// document.getElementById("clrpckr").addEventListener("input", (event) => {
+//     console.log(event.target.value)
+// })

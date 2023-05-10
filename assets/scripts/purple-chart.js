@@ -92,6 +92,7 @@ var mouseleave = function (d) {
   //   .style("stroke", "green")
 };
 const shadeColor = (color, percent) => {
+  console.log(color);
   var R = parseInt(color.substring(1, 3), 16);
   var G = parseInt(color.substring(3, 5), 16);
   var B = parseInt(color.substring(5, 7), 16);
@@ -154,7 +155,7 @@ const grouped_bar_chart = () => {
         .tickSize(0)
         .tickFormat((x) => "$" + x)
     )
-    .call((g) => g.selectAll(".domain").remove())
+    .call((g) => g.selectAll(".domain").remove());
   // .selectAll("text")
   // .style("color", "white");
   // .selectAll("path")
@@ -167,7 +168,13 @@ const grouped_bar_chart = () => {
     .tickSize(-width)
     .scale(y);
 
-  svg.append("g").attr("class", "grid").call(gridlines).selectAll(".domain").remove();
+  svg
+    .append("g")
+    .attr("class", "grid")
+    .call(gridlines)
+    .selectAll(".domain")
+    .remove();
+  svg.transition().duration(1000);
 
   const defs = svg.append("defs");
   const pattern = defs
@@ -200,7 +207,7 @@ const grouped_bar_chart = () => {
   var color = d3
     .scaleOrdinal()
     .domain(subgroups)
-    .range(["#7338fc", "#cca7fb", "#7338fc"]); // , "#4daf4a"]);
+    .range(["#7338fc", "#cca7fb", "#e64d98"]); // , "#4daf4a"]);
 
   // Show the bars
   svg
@@ -238,7 +245,7 @@ const grouped_bar_chart = () => {
       return height - y(d.value);
     })
     .attr("fill", function (d) {
-      return d.key == "BestCommit" ? "url('#diagonalPattern')" : color(d.key); // shadeColor(color(d.key), 200);
+      return color(d.key); //d.key == "BestCommit" ? "url('#diagonalPattern')" : color(d.key); // shadeColor(color(d.key), 200);
     })
     .attr("stroke", function (d) {
       return color(d.key);
@@ -261,9 +268,9 @@ const grouped_bar_chart = () => {
         })
         .curve(d3.curveMonotoneX)
     );
-
   svg
-    .selectAll("text.cfc")
+    .append("g")
+    .selectAll("g")
     .data(data)
     .enter()
     .append("text")
@@ -280,6 +287,25 @@ const grouped_bar_chart = () => {
     .text(function (d) {
       return "$" + d.CFC;
     });
+
+//   svg
+//     .selectAll("text.cfc")
+//     .data(data)
+//     .enter()
+//     .append("text")
+//     .attr("class", "cfc")
+//     .attr("text-anchor", "middle")
+//     .attr("font-size", xSubgroup.bandwidth() / 2)
+//     .attr("font-family", "Arial, Helvetica, sans-serif") //font-family="Arial, Helvetica, sans-serif"
+//     .attr("x", function (d) {
+//       return x(d.Customer) + xSubgroup("CFC") + xSubgroup.bandwidth() / 2;
+//     })
+//     .attr("y", function (d) {
+//       return y(d.CFC) - 10;
+//     })
+//     .text(function (d) {
+//       return "$" + d.CFC;
+//     });
   svg
     .selectAll("text.mds")
     .data(data)
@@ -306,6 +332,7 @@ const grouped_bar_chart = () => {
     .attr("class", "best_commit")
     .attr("text-anchor", "middle")
     .attr("font-size", xSubgroup.bandwidth() / 2)
+    .style("color", "#98989a")
     .attr("font-family", "Arial, Helvetica, sans-serif") //font-family="Arial, Helvetica, sans-serif"
     .attr("x", function (d) {
       return (
@@ -359,7 +386,7 @@ const grouped_bar_chart = () => {
       return color(d);
     })
     .style("fill", function (d) {
-      return d == "BestCommit" ? "url('#diagonalPattern')" : color(d);
+      return color(d); // d == "BestCommit" ? "url('#diagonalPattern')" : color(d);
     });
 
   // lgndSVG.selectAll("")
@@ -371,15 +398,15 @@ const grouped_bar_chart = () => {
     .append("text")
     .attr("x", xSubgroup.bandwidth() * 2 + 20)
     .attr("y", function (d, i) {
-      return 115 + i * 55;
+      return 100 + xSubgroup.bandwidth() / 2 + i * 55;
     }) // 100 is where the first dot appears. 25 is the distance between dots
-    .style("fill", function (d) {
-      return color(d);
-    })
+    .style("fill", "#000000")
     .text(function (d) {
       return d;
     })
     .attr("text-anchor", "left")
     .style("alignment-baseline", "middle");
+
+  svg.selectAll("text").style("color", "#98989a");
 };
 grouped_bar_chart();
