@@ -3,49 +3,53 @@
 } */
 
 svg#pie_chart {
-	width: 100%;
-	height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 path.slice {
-	stroke-width: 1px;
+  stroke-width: 1px;
 }
 
 polyline {
-	opacity: .3;
-	stroke-width: 2px;
-	stroke: black;
-	fill: none;
+  opacity: 0.3;
+  stroke-width: 2px;
+  stroke: black;
+  fill: none;
 }
 
 #piechart_1 {
-	height: 80vh;
+  height: 80vh;
 }
 
 .tooltip {
-	position: fixed;
+  position: fixed;
 }
 
 #header {
-	background-color: white;
-	position: fixed;
-	height: 140px;
-	top: 0;
-	left: 0;
-	right: 0;
-	padding: 10px;
-	/* border: 1px solid black; */
+  background-color: white;
+  position: fixed;
+  height: 140px;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 10px;
+  /* border: 1px solid black; */
 }
 
 .container {
-	margin-top: 170px;
+  margin-top: 170px;
 }
 
 .radio-btn {
-	padding: 10px;
-	cursor: pointer;
+  padding: 10px;
+  cursor: pointer;
 }
 
 .display-none {
-	display: none;
+  display: none;
+}
+
+.grid line {
+  stroke: #ddd;
 }
